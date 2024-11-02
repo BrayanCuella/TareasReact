@@ -1,8 +1,10 @@
 //tsrafc para crear siempre
 
 import { useEffect, useState } from "react";
-import { getData } from "../services/apiServices";
+/*import { getData } from "../services/apiServices";*/
 import { Button, Table } from "react-bootstrap";
+import { ProductoService } from "../services/producto.service";
+
 
 interface Producto  {
     id: number;
@@ -18,10 +20,11 @@ const[loading, setLoading]=useState<boolean>(true)
 const[error, setError]=useState<string|null>(null)
 //el useEffect son funcionaleidades que traemos de otras clases sin necesidad de tenerlas en estas clases
 //los hook son funciones que dentro de la clase en la que estamos no necesitamos 
+const productoService =new ProductoService();
 useEffect(()=>{
     const fetchData= async ()=>{
         try {
-            const result=await getData();
+            const result=await productoService.getData();
             setProductos(result);
         } catch (error) {
             setError('Error al cargar los datos 😔');
@@ -32,7 +35,8 @@ useEffect(()=>{
     fetchData();
 },[]);
   if (loading)return<div>Cargando.....</div>
-  if(error)return<div>{error}</div>
+  if(error)return<div>{error}</div>;
+  
   return (
     <div>
         <h1>Datos de los productos</h1>
@@ -58,6 +62,7 @@ useEffect(()=>{
                     <Button className="ms-2" variant="danger">Eliminar</Button>
                     </td>
                 </tr>
+                
             ))}
         
         
@@ -66,5 +71,6 @@ useEffect(()=>{
     </Table>
     </div>
   )
+
 //el map permite viajar entre las carpetas
 }
