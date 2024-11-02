@@ -1,5 +1,5 @@
 import axios from"axios";
-const API_URL = 'http://localhost/laravel-api/public/api';
+const API_URL = 'http://localhost/backend-api/public/api/';
 export const api=axios.create({
     baseURL:API_URL
 });
